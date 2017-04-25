@@ -1,0 +1,9 @@
+{
+  "name": "smallorange-local-lambda-invoker",
+  "version": "1.0.0",
+  "description": "Simple Local AWS Lambda Invoker",
+  "main": "index.js",
+  "author": "Felipe Rohde",
+  "license": "ISC",
+  "dependencies": {}
+}
