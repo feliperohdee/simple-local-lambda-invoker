@@ -1,14 +1,14 @@
 # Simple AWS Local Lambda Invoker
 
 ## Usage
-
+		const path = require('path');
 		const {
 			load,
 			invoke
 		} = require('smallorange-local-lambda-invoker');
 
 		load({
-			connect: '../connect-lambda/index.js'
+			connect: path.resolve('../my-function-path')
 		});
 
 		invoke({

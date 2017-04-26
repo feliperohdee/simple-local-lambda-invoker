@@ -15,7 +15,7 @@ exports.load = files => {
 exports.invoke = (params, callback) => {
 	let {
 		FunctionName,
-		Payload
+		Payload = {}
 	} = params;
 
 	if (!callback) {
