@@ -33,11 +33,16 @@ exports.invoke = (params, callback) => {
 	lambdas[FunctionName].handler(Payload, null, (err, data) => {
 		if (err) {
 			return callback({
-				StatusCode: 200,
-				FunctionError: 'Handled',
-				Payload: JSON.stringify({
-					errorMessage: err.message
-				})
+				errorMessage: err.message,
+				errorType: 'Error',
+				stackTrace: JSON.stringify(err.stack)
+					.replace(/\"/g, '')
+					.replace(/\t/g, '')
+					.replace(/\s{2,}/g, '')
+					.replace(/at\s/g, '')
+					.replace(/\\n/g, '\n')
+					.split('\n')
+					.slice(1)
 			});
 		}
 
