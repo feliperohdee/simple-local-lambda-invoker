@@ -8,5 +8,10 @@
   "main": "index.js",
   "author": "Felipe Rohde",
   "license": "ISC",
-  "dependencies": {}
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/feliperohdee/smallorange-local-lambda-invoker.git"
+  },
+  "homepage": "https://smallorange.co"
 }

@@ -19,11 +19,11 @@ exports.invoke = (params, callback) => {
 	} = params;
 
 	if (!callback) {
-		throw new Error('callback is missing.');
+		return;
 	}
 
 	if (!lambdas[FunctionName]) {
-		throw new Error(`Function '${FunctionName}' doesn't exists.`);
+		return callback(new Error(`Function '${FunctionName}' doesn't exists.`));
 	}
 
 	if (typeof Payload === 'string') {
