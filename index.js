@@ -35,7 +35,7 @@ exports.invoke = (params, callback) => {
 			return callback(null, {
 				StatusCode: 200,
 				FunctionError: 'Handled',
-				Payload: {
+				Payload: JSON.stringify({
 					errorMessage: err.message,
 					errorType: 'Error',
 					stackTrace: JSON.stringify(err.stack)
@@ -46,7 +46,7 @@ exports.invoke = (params, callback) => {
 						.replace(/\\n/g, '\n')
 						.split('\n')
 						.slice(1)
-				}
+				})
 			});
 		}
 
