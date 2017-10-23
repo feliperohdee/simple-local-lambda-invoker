@@ -1,6 +1,6 @@
 {
   "name": "smallorange-local-lambda-invoker",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Simple Local AWS Lambda Invoker",
   "scripts": {
     "deploy": "npm version patch -m 'Bump %s' && git push origin master && npm publish"
