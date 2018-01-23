@@ -9,7 +9,7 @@
   "author": "Felipe Rohde",
   "license": "ISC",
   "dependencies": {
-    "smallorange-beauty-error": "^1.0.3"
+    "error-stack-parser": "^2.0.1"
   },
   "repository": {
     "type": "git",

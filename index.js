@@ -1,3 +1,4 @@
+const stackParser = require('error-stack-parser');
 const lambdas = {};
 
 exports.load = files => {
@@ -38,14 +39,7 @@ exports.invoke = (params, callback) => {
 				Payload: JSON.stringify({
 					errorMessage: err.message,
 					errorType: 'Error',
-					stackTrace: JSON.stringify(err.stack)
-						.replace(/\"/g, '')
-						.replace(/\t/g, '')
-						.replace(/\s{2,}/g, '')
-						.replace(/at\s/g, '')
-						.replace(/\\n/g, '\n')
-						.split('\n')
-						.slice(1)
+					stackTrace: stackParser.parse(err)
 				})
 			});
 		}
