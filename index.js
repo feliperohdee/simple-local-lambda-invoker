@@ -31,7 +31,7 @@ exports.invoke = (params, callback) => {
 		Payload = JSON.parse(Payload);
 	}
 
-	lambdas[FunctionName].handler(Payload, null, (err, data) => {
+	lambdas[FunctionName].handler(Payload, {}, (err, data) => {
 		if (err) {
 			return callback(null, {
 				StatusCode: 200,
