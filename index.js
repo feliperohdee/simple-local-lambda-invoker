@@ -2,7 +2,7 @@ const stackParser = require('error-stack-parser');
 const lambdas = {};
 
 exports.load = files => {
-	for (name in files) {
+	for (let name in files) {
 		const file = files[name];
 
 		if (!file) {
@@ -11,7 +11,7 @@ exports.load = files => {
 
 		lambdas[name] = require(file);
 	}
-}
+};
 
 exports.invoke = (params, callback) => {
 	let {
@@ -49,4 +49,4 @@ exports.invoke = (params, callback) => {
 			Payload: JSON.stringify(data)
 		});
 	});
-}
+};
