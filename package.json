@@ -1,19 +1,18 @@
 {
-  "name": "smallorange-local-lambda-invoker",
-  "version": "1.0.11",
-  "description": "Simple Local AWS Lambda Invoker",
-  "scripts": {
-    "deploy": "npm version patch -m 'Bump %s' && git push origin master && npm publish"
-  },
-  "main": "index.js",
-  "author": "Felipe Rohde",
-  "license": "ISC",
-  "dependencies": {
-    "error-stack-parser": "^2.0.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/feliperohdee/smallorange-local-lambda-invoker.git"
-  },
-  "homepage": "https://smallorange.co"
+    "name": "simple-local-lambda-invoker",
+    "version": "1.0.0",
+    "description": "Simple Local AWS Lambda Invoker",
+    "scripts": {
+        "deploy": "npm version patch -m 'Bump %s' && git push origin master && npm publish"
+    },
+    "main": "index.js",
+    "author": "Felipe Rohde",
+    "license": "ISC",
+    "dependencies": {
+        "error-stack-parser": "^2.0.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/feliperohdee/simple-local-lambda-invoker.git"
+    }
 }

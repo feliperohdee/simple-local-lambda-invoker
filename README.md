@@ -5,7 +5,7 @@
 		const {
 			load,
 			invoke
-		} = require('smallorange-local-lambda-invoker');
+		} = require('simple-local-lambda-invoker');
 
 		load({
 			connect: path.resolve('../my-function-path')
