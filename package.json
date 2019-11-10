@@ -1,6 +1,6 @@
 {
     "name": "simple-local-lambda-invoker",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Simple Local AWS Lambda Invoker",
     "scripts": {
         "deploy": "npm version patch -m 'Bump %s' && git push origin master && npm publish",
