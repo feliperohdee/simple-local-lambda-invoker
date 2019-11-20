@@ -1,52 +1,81 @@
+const _ = require('lodash');
 const stackParser = require('error-stack-parser');
-const lambdas = {};
 
-exports.load = files => {
-	for (let name in files) {
-		const file = files[name];
+const functions = {};
+const load = files => {
+    _.forEach(files, (file, name) => {
+        if (!file) {
+            return;
+        }
 
-		if (!file) {
-			return;
-		}
-
-		lambdas[name] = require(file);
-	}
+        functions[name] = require(file);
+    });
 };
 
-exports.invoke = (params, callback) => {
-	let {
-		FunctionName,
-		Payload = {}
-	} = params;
+const invoke = (params, callback) => {
+    const promise = new Promise((resolve, reject) => {
+        let {
+            FunctionName,
+            Payload = {}
+        } = params;
 
-	if (!callback) {
-		return;
-	}
+        if (!functions[FunctionName]) {
+            return reject(new Error(`Function '${FunctionName}' doesn't exists.`));
+        }
 
-	if (!lambdas[FunctionName]) {
-		return callback(new Error(`Function '${FunctionName}' doesn't exists.`));
-	}
+        if (typeof Payload === 'string') {
+            Payload = JSON.parse(Payload);
+        }
 
-	if (typeof Payload === 'string') {
-		Payload = JSON.parse(Payload);
-	}
+        const formatAndResolve = (err, data) => {
+            if (err && !_.isError(err)) {
+                err = new Error(err);
+            }
 
-	lambdas[FunctionName].handler(Payload, {}, (err, data) => {
-		if (err) {
-			return callback(null, {
-				StatusCode: 200,
-				FunctionError: 'Handled',
-				Payload: JSON.stringify({
-					errorMessage: err.message,
-					errorType: 'Error',
-					stackTrace: stackParser.parse(err)
-				})
-			});
-		}
+            return resolve(err ? {
+                StatusCode: 200,
+                FunctionError: 'Handled',
+                Payload: JSON.stringify({
+                    errorType: 'Error',
+                    errorMessage: err.message,
+                    trace: stackParser.parse(err)
+                })
+            } : {
+                StatusCode: 200,
+                ExecutedVersion: '$LATEST',
+                Payload: _.isString(data) ? data : JSON.stringify(data)
+            });
+        };
 
-		callback(null, {
-			StatusCode: 200,
-			Payload: JSON.stringify(data)
-		});
-	});
+        const lambdaResult = functions[FunctionName].handler(Payload, {}, formatAndResolve);
+
+        // handle promisified lambda
+        if (lambdaResult && lambdaResult.then) {
+            lambdaResult.then(data => {
+                    formatAndResolve(null, data);
+                })
+                .catch(err => {
+                    formatAndResolve(err);
+                });
+        }
+    });
+
+    if (callback) {
+        promise.then(data => {
+                callback(null, data);
+            })
+            .catch(err => {
+                callback(err);
+            });
+    }
+
+    return {
+        promise: () => promise
+    };
+};
+
+module.exports = {
+	functions,
+    load,
+    invoke
 };
