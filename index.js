@@ -16,6 +16,7 @@ const invoke = (params, callback) => {
     const promise = new Promise((resolve, reject) => {
         let {
             FunctionName,
+            InvocationType,
             Payload = {}
         } = params;
 
@@ -40,12 +41,18 @@ const invoke = (params, callback) => {
                     errorMessage: err.message,
                     trace: stackParser.parse(err)
                 })
-            } : {
+            } : (data ? {
                 StatusCode: 200,
                 ExecutedVersion: '$LATEST',
                 Payload: _.isString(data) ? data : JSON.stringify(data)
-            });
+            } : {
+                StatusCode: 200
+            }));
         };
+
+        if(InvocationType === 'Event') {
+            setTimeout(formatAndResolve);
+        }
 
         const lambdaResult = functions[FunctionName].handler(Payload, {}, formatAndResolve);
 
