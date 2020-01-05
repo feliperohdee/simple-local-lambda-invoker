@@ -50,11 +50,15 @@ const invoke = (params, callback) => {
             }));
         };
 
+        const context = {
+            getRemainingTimeInMillis: () => 30000
+        };
+
         if(InvocationType === 'Event') {
             setTimeout(formatAndResolve);
         }
 
-        const lambdaResult = functions[FunctionName].handler(Payload, {}, formatAndResolve);
+        const lambdaResult = functions[FunctionName].handler(Payload, context, formatAndResolve);
 
         // handle promisified lambda
         if (lambdaResult && lambdaResult.then) {
