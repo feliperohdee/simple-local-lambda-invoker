@@ -3,20 +3,15 @@
     "version": "1.0.4",
     "description": "Simple Local AWS Lambda Invoker",
     "scripts": {
-        "deploy": "npm version patch -m 'Bump %s' && git push origin master && npm publish",
         "eslint": "eslint . --ext .js --config node_modules/eslint-config/index.js"
     },
     "main": "index.js",
     "author": "Felipe Rohde",
     "license": "ISC",
     "dependencies": {
-        "error-stack-parser": "^2.0.1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/feliperohdee/simple-local-lambda-invoker.git"
+        "error-stack-parser": "^2.0.6"
     },
     "devDependencies": {
-        "eslint": "^6.6.0"
+        "eslint": "^7.20.0"
     }
 }
